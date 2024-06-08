@@ -1,3 +1,9 @@
+<?php 
+
+include_once ("config/db_conn.php");
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>

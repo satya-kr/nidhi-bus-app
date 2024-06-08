@@ -1,4 +1,50 @@
-<?php include_once ("includes/header.php") ?>
+<?php 
+
+include_once ("includes/header.php");
+include_once ("config/check_auth.php");
+
+if($isAuth) {
+    header('Location: user/index.php');
+}
+
+if(isset($_POST['submit_login'])) {
+    if (
+        $_POST['phone'] !== "" && 
+        $_POST['password'] !== ""
+    ) {
+        $phone = htmlentities($_POST['phone']);
+        $password = htmlentities($_POST['password']);
+        
+        $sql = "SELECT * FROM users WHERE phone = '$phone'";
+        $result = mysqli_query($conn, $sql);
+
+        if(mysqli_num_rows($result) > 0) {
+            $user = mysqli_fetch_assoc($result); // convert to array
+            if($user['status'] > 0) {
+                if(password_verify($password, $user['password'])) {
+                    $_SESSION['user'] = $user;
+                    $_SESSION['user']['isAuth'] = true;
+
+                    header('Location: user/index.php');
+
+                } else {
+                    echo "<script>alert('Invalid credentials!');</script>";
+                }
+            } else {
+                echo "<script>alert('Access Denied - User Blocked!');</script>";
+            }
+        } else {
+            echo "<script>alert('Invalid credentials!');</script>";
+        }
+
+        
+    }
+}
+
+
+
+
+?>
 
 
     <div class="wrapper">
@@ -14,9 +60,7 @@
                         <label class="frm-label" for="FROM">Password <font color="red">*</font></label>
                         <input type="password" name="password" class="frm" />
                     </div>
-                    <button type="submit" class="btn-dflt w-100">
-                        Login
-                    </button>
+                    <input type="submit" name="submit_login" class="btn-dflt w-100" value="Login" />
                     <center>
                         <br>
                         <a href="register.php">Create an account</a></center>
