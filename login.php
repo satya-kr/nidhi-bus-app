@@ -22,10 +22,17 @@ if(isset($_POST['submit_login'])) {
             $user = mysqli_fetch_assoc($result); // convert to array
             if($user['status'] > 0) {
                 if(password_verify($password, $user['password'])) {
+
                     $_SESSION['user'] = $user;
                     $_SESSION['user']['isAuth'] = true;
 
-                    header('Location: user/index.php');
+                    if($user['role'] === 'user') {
+                        header('Location: user/index.php');
+                    } else {
+                        header('Location: admin/index.php');
+                    }
+
+
 
                 } else {
                     echo "<script>alert('Invalid credentials!');</script>";
@@ -40,13 +47,7 @@ if(isset($_POST['submit_login'])) {
         
     }
 }
-
-
-
-
 ?>
-
-
     <div class="wrapper">
         <div class="section-a">
             <div class="form-div">

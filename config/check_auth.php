@@ -12,6 +12,7 @@ if(!empty($_SESSION['user']) && $_SESSION['user']['isAuth'] == true) {
             $_SESSION['user']['isAuth'] = true;
             
             $isAuth = true;
+            $userRole = $user['role'];
 
         } else {
             echo "<script>alert('Access Denied - User Blocked!');</script>";
@@ -24,4 +25,5 @@ if(!empty($_SESSION['user']) && $_SESSION['user']['isAuth'] == true) {
 } else {
     session_unset();
     $isAuth = false;
+    $userRole = null;
 }

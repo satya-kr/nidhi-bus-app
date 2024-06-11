@@ -1,5 +1,11 @@
 <?php 
 include_once ("includes/header.php");
+include_once ("config/check_auth.php");
+
+if($isAuth) {
+    header('Location: user/index.php');
+}
+
 
 if(isset($_POST['submit_register'])) { 
     if(
