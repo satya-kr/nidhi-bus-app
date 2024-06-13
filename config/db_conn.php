@@ -1,5 +1,7 @@
 <?php 
 
+$BASE_URL = "http://localhost/bus-app";
+
 $DB_NAME = "busapp";
 $DB_HOST = "localhost";
 $DB_USER = "root";
